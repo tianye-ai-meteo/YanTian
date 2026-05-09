@@ -1,0 +1,15 @@
+# Model files (download separately)
+*.onnx
+*.data
+
+# Generated directories
+down_load/
+predict/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
