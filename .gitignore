@@ -3,7 +3,7 @@
 *.data
 
 # Generated directories
-down_load/
+data/
 predict/
 
 # Python cache

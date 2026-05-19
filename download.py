@@ -325,7 +325,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     date_time = sys.argv[1]
-    download_files('down_load/', date_time)
+    download_files('data/', date_time)
     process_data('down_load/', date_time)
     current = datetime.strptime(date_time, "%Y%m%d%H")
     past = current - timedelta(hours=6)

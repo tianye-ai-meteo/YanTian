@@ -26,7 +26,7 @@ def _get_file_path(dt):
         Returns:
             str: 文件完整路径
         """
-        root_dir = test_model_path + '/down_load/'
+        root_dir = os.path.join(test_model_path, 'data') + '/'
         date_dir = os.path.join(root_dir, dt.strftime('%Y%m%d%H'))
 
         filename = f'gfs_{dt.strftime("%Y%m%d%H")}.npy' # <--- 修改后缀
@@ -68,7 +68,7 @@ def get_avg_std():
 
 
 
-def get_YanTian_input_label(dt, downsample_factor=1):
+def get_YanTian_input_label(dt):
     """
     输入一个时间点YYYYMMDDHH(str), 返回符合格式的模型输入、标签
     """ 
@@ -81,7 +81,7 @@ def get_YanTian_input_label(dt, downsample_factor=1):
     # ---------------生成输入---------------
     # 1、当前时间点
     data_file = _get_file_path(current_time)
-    current_data = torch.from_numpy(np.load(data_file)) # (69, 721, 1440)
+    current_data = torch.from_numpy(np.load(data_file)) # (69, 180, 360)
     # 归一化
     # 反归一化
     unnormalized_result = np.empty_like(current_data, dtype=np.float32)    
@@ -110,13 +110,13 @@ def get_YanTian_input_label(dt, downsample_factor=1):
 
 def main():
     date_time = "2026030300"
-    download_files(folder=test_model_path + '/down_load/', date_time = date_time)
-    process_data(folder=test_model_path + '/down_load/', date_time = date_time)
+    download_files(folder=os.path.join(test_model_path, 'data') + '/', date_time=date_time)
+    process_data(folder=os.path.join(test_model_path, 'data') + '/', date_time=date_time)
     current = datetime.strptime(date_time, "%Y%m%d%H")
     past = current - timedelta(hours=6)
     past_date = datetime.strftime(past, "%Y%m%d%H")
-    download_files(folder=test_model_path + '/down_load/', date_time = past_date)
-    process_data(folder=test_model_path + '/down_load/', date_time = past_date)
+    download_files(folder=os.path.join(test_model_path, 'data') + '/', date_time=past_date)
+    process_data(folder=os.path.join(test_model_path, 'data') + '/', date_time=past_date)
     input_data = get_YanTian_input_label(date_time, downsample_factor=1)
     print(input_data.shape)
 
